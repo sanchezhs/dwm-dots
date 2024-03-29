@@ -10,16 +10,19 @@
     const char *
     brightness(void)
     {
-        uintmax_t brightness;
-        if (pscanf("/sys/class/backlight/intel_backlight/brightness", "%ju", &brightness) != 1)
+        uintmax_t current_brightness, max_brightness;
+        if (pscanf("/sys/class/backlight/intel_backlight/brightness", "%ju", &current_brightness) != 1 ||
+            pscanf("/sys/class/backlight/intel_backlight/max_brightness", "%ju", &max_brightness) != 1)
         {
             return NULL;
         }
-        brightness = (int) brightness * 96000 / 100;
-        if (brightness == 96000) {
-            brightness = 100000;
+
+        if (max_brightness == 0) {
+            warn("Max brightness is reported as 0, cannot calculate percentage.");
+            return NULL;
         }
 
-        return fmt_human(brightness, 1000);
+        double brightness_percentage = (double)current_brightness / max_brightness * 100;
+        return fmt_human(brightness_percentage, 1000);
     }
 #endif

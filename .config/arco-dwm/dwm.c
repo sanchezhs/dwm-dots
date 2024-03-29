@@ -217,6 +217,7 @@ static void movemouse(const Arg *arg);
 static Client *nexttiled(Client *c);
 static void pop(Client *);
 static void propertynotify(XEvent *e);
+static void quit(const Arg *arg);
 /*static void quit(const Arg *arg);*/
 static Monitor *recttomon(int x, int y, int w, int h);
 static void removesystrayicon(Client *i);
@@ -1130,6 +1131,11 @@ isuniquegeom(XineramaScreenInfo *unique, size_t n, XineramaScreenInfo *info)
 	return 1;
 }
 #endif /* XINERAMA */
+
+void
+quit(const Arg *arg) {
+	exit(0);
+}
 
 void
 keypress(XEvent *e)
