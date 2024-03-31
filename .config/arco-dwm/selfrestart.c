@@ -56,7 +56,6 @@ char *get_dwm_path(){
  */
 void self_restart(const Arg *arg) {
     char *const argv[] = {get_dwm_path(), NULL};
-
     if(argv[0] == NULL){
         return;
     }

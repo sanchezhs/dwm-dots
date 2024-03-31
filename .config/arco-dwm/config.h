@@ -20,6 +20,7 @@ static const char col_gray2[] = "#302D41"; /* Current Line + Selection (Darker) 
 static const char col_gray3[] = "#CDD6F4"; /* Foreground (Lighter) */
 static const char col_gray4[] = "#F5E0DC"; /* Comment + Git Ignored (Lighter) */
 static const char col_cyan[]  = "#F28FAD"; /* Pink (for accents and selections) */
+
 static const unsigned int baralpha = OPAQUE;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
@@ -81,7 +82,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static char *rofiruncmd[] = { "/home/samuel/rofi/files/launchers/type-4/launcher.sh", NULL};
-static char *rofipowermenu[] = { "/home/samuel/.config/rofi/powermenu/type-2/powermenu.sh", NULL};
+static char *rofirunpower[] = { "/home/samuel/rofi/files/powermenu/type-2/powermenu.sh", NULL};
 static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *filecmd[]  = { "thunar", NULL };
 static const char *calendar[]  = { "gsimplecal", NULL };
@@ -98,6 +99,7 @@ static const char *light_down[] = { "/usr/bin/brillo",   "-U", "5", NULL };
 #include "shiftview.c"
 
 
+#include "movestack.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -109,15 +111,17 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Left,   focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      spawn,    	   {.v = rofiruncmd } },
-	{ MODKEY,                       XK_x,      spawn,    	   {.v = rofipowermenu } },
+	//{ MODKEY,                       XK_x,      spawn,    	   {.v = rofirunpower } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	/*{ MODKEY,                       XK_Return, zoom,           {0} },*/
 	/*{ MODKEY,                       XK_Tab,    view,           {0} },*/
-	{ MODKEY|ShiftMask,				XK_q,      quit,     {0} },
+	{ MODKEY|ShiftMask,				XK_q,      killclient,     {0} },
 	{ MODKEY,						XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[1]} },
