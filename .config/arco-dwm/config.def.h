@@ -2,6 +2,8 @@
 
 /* See LICENSE file for copyright and license details. */
 
+#define SESSION_FILE "/tmp/dwm-session"
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int gappx     = 15;        /* gaps between windows */
@@ -82,7 +84,6 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static char *rofiruncmd[] = { "/home/samuel/rofi/files/launchers/type-4/launcher.sh", NULL};
-static char *rofirunpower[] = { "/home/samuel/rofi/files/powermenu/type-2/powermenu.sh", NULL};
 static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *filecmd[]  = { "thunar", NULL };
 static const char *calendar[]  = { "gsimplecal", NULL };
@@ -111,7 +112,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Left,   focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,      spawn,    	   {.v = rofiruncmd } },
-	//{ MODKEY,                       XK_x,      spawn,    	   {.v = rofirunpower } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },

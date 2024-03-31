@@ -229,8 +229,10 @@ static void resizeclient(Client *c, int x, int y, int w, int h);
 static void resizemouse(const Arg *arg);
 static void resizerequest(XEvent *e);
 static void restack(Monitor *m);
+static void restoreSession(void);
 static void run(void);
 static void runautostart(void);
+static void saveSession(void);
 static void scan(void);
 static int sendevent(Window w, Atom proto, int m, long d0, long d1, long d2, long d3, long d4);
 static void sendmon(Client *c, Monitor *m);
@@ -1166,6 +1168,9 @@ quit(const Arg *arg)
 {
 	if(arg->i) restart = 1;
  	running = 0;
+
+	if (restart == 1)
+		saveSession();
 }
 
 void
@@ -1611,6 +1616,45 @@ restack(Monitor *m)
 }
 
 void
+restoreSession(void)
+{
+	// restore session
+	FILE *fr = fopen(SESSION_FILE, "r");
+	if (!fr)
+		return;
+
+	char *str = malloc(23 * sizeof(char)); // allocate enough space for excepted input from text file
+	while (fscanf(fr, "%[^\n] ", str) != EOF) { // read file till the end
+		long unsigned int winId;
+		unsigned int tagsForWin;
+		int check = sscanf(str, "%lu %u", &winId, &tagsForWin); // get data
+		if (check != 2) // break loop if data wasn't read correctly
+			break;
+		
+		for (Client *c = selmon->clients; c ; c = c->next) { // add tags to every window by winId
+			if (c->win == winId) {
+				c->tags = tagsForWin;
+				break;
+			}
+		}
+    }
+
+	for (Client *c = selmon->clients; c ; c = c->next) { // refocus on windows
+		focus(c);
+		restack(c->mon);
+	}
+
+	for (Monitor *m = selmon; m; m = m->next) // rearrange all monitors
+		arrange(m);
+
+	free(str);
+	fclose(fr);
+	
+	// delete a file
+	remove(SESSION_FILE);
+}
+
+void
 run(void)
 {
 	XEvent ev;
@@ -1696,6 +1740,16 @@ runautostart(void)
 
 	free(pathpfx);
 	free(path);
+}
+
+void
+saveSession(void)
+{
+	FILE *fw = fopen(SESSION_FILE, "w");
+	for (Client *c = selmon->clients; c != NULL; c = c->next) { // get all the clients with their tags and write them to the file
+		fprintf(fw, "%lu %u\n", c->win, c->tags);
+	}
+	fclose(fw);
 }
 
 void
@@ -2776,6 +2830,7 @@ main(int argc, char *argv[])
 #endif /* __OpenBSD__ */
 	scan();
 	runautostart();
+	restoreSession();
 	run();
 	if(restart) execvp(argv[0], argv);
 	cleanup();

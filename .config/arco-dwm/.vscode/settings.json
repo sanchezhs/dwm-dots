@@ -1,6 +1,7 @@
 {
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
-        "selfrestart.c": "cpp"
+        "selfrestart.c": "cpp",
+        "cstdlib": "cpp"
     }
 }
