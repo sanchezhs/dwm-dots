@@ -855,8 +855,16 @@ drawbar(Monitor *m)
 	int x, w, sw = 0, stw = 0;
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
+	int window_count = 0;
+	char client_count_text[10];//new
 	unsigned int i, occ = 0, urg = 0;
 	Client *c;
+
+	for (Client *c = m->clients; c; c = c->next) {//new
+		if (ISVISIBLE(c))
+			window_count++;
+	}
+	sprintf(client_count_text, "[%d]", window_count);//new	
 
 	if(showsystray && m == systraytomon(m))
 		stw = getsystraywidth();
@@ -889,6 +897,13 @@ drawbar(Monitor *m)
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
+	if (showclientcount) {//new
+		drw_setscheme(drw, scheme[SchemeNorm]);
+		w = TEXTW(client_count_text);
+		drw_text(drw, x, 0, w, bh, lrpad / 2, client_count_text, 0);
+		x += w;
+	}
+	
 	if ((w = m->ww - sw - stw - x) > bh) {
 		if (m->sel) {
 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
