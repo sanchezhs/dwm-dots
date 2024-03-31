@@ -18,8 +18,10 @@ static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[] = "#1E1E2E"; /* Background (Darker) */
 static const char col_gray2[] = "#302D41"; /* Current Line + Selection (Darker) */
 static const char col_gray3[] = "#CDD6F4"; /* Foreground (Lighter) */
-static const char col_gray4[] = "#F5E0DC"; /* Comment + Git Ignored (Lighter) */
-static const char col_cyan[]  = "#F28FAD"; /* Pink (for accents and selections) */
+//static const char col_gray4[] = "#F5E0DC"; /* Comment + Git Ignored (Lighter) */
+static const char col_gray4[] = "#585B70"; /* Comment + Git Ignored (Lighter) */
+//static const char col_cyan[]  = "#F28FAD"; /* Pink (for accents and selections) */
+static const char col_cyan[]  = "#89B4fA"; /* Pink (for accents and selections) */
 
 static const unsigned int baralpha = OPAQUE;
 static const unsigned int borderalpha = OPAQUE;
