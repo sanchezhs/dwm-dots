@@ -1,11 +1,10 @@
---- config.def.h	Tue Aug 24 13:13:20 2010 +0100
-+++ config.def.h	Sun Sep 05 18:43:07 2010 +0200
-@@ -69,6 +70,8 @@
- 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
- 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
- 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-+	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
-+	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
- 	{ MODKEY,                       XK_Return, zoom,           {0} },
- 	{ MODKEY,                       XK_Tab,    view,           {0} },
- 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+--- config.def.h
++++ config.def.h
+@@ -94,6 +94,7 @@ static Key keys[] = {
+ 	TAGKEYS(                        XK_8,                      7)
+ 	TAGKEYS(                        XK_9,                      8)
+ 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
++	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
+ };
+ 
+ /* button definitions */
