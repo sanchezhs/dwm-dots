@@ -18,19 +18,21 @@ static const int showclientcount	= 0;        /* 0 means no window count */
 static const Bool viewontag         = False;     /* Switch view on tag switch */
 static const char *fonts[]          = { "Noto Sans Mono:size=11" };
 static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[] = "#1E1E2E"; /* Background (Darker) */
-static const char col_gray2[] = "#302D41"; /* Current Line + Selection (Darker) */
-static const char col_gray3[] = "#CDD6F4"; /* Foreground (Lighter) */
-static const char col_gray4[] = "#585B70"; /* Comment + Git Ignored (Darker) */
-static const char col_cyan[]  = "#89B4fA"; /* Blue (for accents and selections) */
+static const char col_background[] = "#1a1b26"; /* Editor Background (Night) */
+static const char col_foreground[] = "#b4f9f8"; /* Editor Foreground */
+static const char col_accent[]     = "#414868"; /* Function names, Terminal Blue - used for selections/highlights */
+static const char col_dim[]        = "#565f89"; /* Comments */
+static const char col_contrast[]   = "#b4f9f8"; /* Control Keywords, Terminal Magenta - for active elements */
 
 static const unsigned int baralpha = OPAQUE;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+    /*               fg         bg         border   */
+    [SchemeNorm] = { col_foreground, col_background, col_dim },
+    [SchemeSel]  = { col_contrast, col_accent, col_accent },
 };
+
+
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
 	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },

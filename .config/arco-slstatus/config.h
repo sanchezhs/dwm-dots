@@ -1,4 +1,4 @@
-
+/* See LICENSE file for copyright and license details. */
 
 /* interval between updates (in ms) */
 const unsigned int interval = 1000;
@@ -63,10 +63,11 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function format          argument */
-		{ cpu_perc, "[CPU %s%%]  ",   NULL  },
-		{ ram_perc, "[RAM %s%%]  ", NULL	      },
-		{ battery_perc, "[BAT %s%%]  ", "BAT1"},
-		{ brightness, "[BRI %s%%]", NULL },
+		{ battery_perc, "[BAT %s%%] " , "BAT1"},
+		{ brightness, "[BRI %s%%] ", NULL },
+		{ datetime, "%s","%a %b %d %R" }
+
+		//{ cpu_perc, "[CPU %s%%]  ",   NULL  },
+		//{ ram_perc, "[RAM %s%%]  ", NULL	      },
 		/*{ disk_free,"[hdd %sB]  | ",      "/" },*/
-		{ datetime, "%s","%a %b %d %R" },
 };
